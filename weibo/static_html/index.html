@@ -17,7 +17,7 @@
                         <div class="model__content">
 
                             <div class="form__field">
-                                <label for="input-title">introduction:</label>
+                                <label for="input-introduction">introduction:</label>
                                 <input type="text" id="input-introduction" type="text" value="登上北京卫视2010网络春晚舞台，出版葫芦丝音乐CD，荣获巴乌全国金奖，新浪社区委员会成员">
                             </div>
 
@@ -32,6 +32,13 @@
                                 "
                                 </textarea>
                             </div>
+                            
+                            
+                            <div class="form__field">
+                                <label for="input-tags">tags</label>
+                                <input type="text" id="input-tags" type="text" value="辟谣联盟 神马都是浮云 微春晚 耽美">
+                            </div>
+                            
 
                             <div class="form__field form__field--btn">
                                 <button type="button" class="btn btn--icon-disclosure" onclick="predict()">Predict</button>
@@ -57,7 +64,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.js"></script>
     <script>
     function predict() {
-        var quotedFieldList = ['introduction','verifiedText','weiboContent'];
+        var quotedFieldList = ['introduction','verifiedText','weiboContent','tags'];
         var data = '';
         quotedFieldList.forEach(function(fieldName) {
             data+= fieldName+'='+document.getElementById("input-" + fieldName).value+'&';

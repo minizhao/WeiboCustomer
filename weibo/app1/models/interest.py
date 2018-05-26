@@ -12,12 +12,11 @@ from sklearn import metrics#模型评估
 from blaze.expr.expressions import label
 
 class Model(object):
-   
     def __init__(self):
         super(Model, self).__init__()
+        
         self.stopWords = self.loadStopWords()
         self.make_data()
-        
         
     def loadStopWords(self):
         """
@@ -34,7 +33,6 @@ class Model(object):
         :param file: the label filename,default in the ./data/
         :return:  label dict{id:age}
         """
-       
         label = {}
         with open(os.path.join('./data/',file), 'r', encoding='utf-8') as f:
             for line in f.readlines():
@@ -71,9 +69,6 @@ class Model(object):
                 vec.append(0)
         return vec
 
-        
-        
-    
     def make_data(self):
    
         train_label_dict=self.get_label('train_label.txt')
@@ -120,31 +115,26 @@ class Model(object):
                 self.test_label.append(self.label_to_vec(value))
                 test_data.append(corpus[key])
                     
-
         self.vectorizer = CountVectorizer()
         self.corpus_vec = self.vectorizer.fit(train_data+test_data)
         self.train_vec =  self.corpus_vec.transform(train_data)
         self.test_vec =  self.corpus_vec.transform(test_data)
 
-
         del train_data
         del test_data
+        
     def train(self):
         
         print('start train model')
-        
         self.clf = RandomForestClassifier()
         self.clf.fit(self.train_vec.toarray(), self.train_label)
-
         print('train model done')
         
     def eval(self):
 
-
         preds = self.clf.predict(self.test_vec.toarray())
         correct = 0
         zh = 0
-       
         total = len(self.test_label)*len(self.label_value)
         for idx_i,item in enumerate(self.test_label):
             for idx_j,icode in enumerate(item):
@@ -167,10 +157,8 @@ class Model(object):
             if value==1:
                 rst.append(self.label_value[idx])
         print(preds)
-
         return ','.join(rst)
-        
-
+    
 if __name__ == '__main__':
 
     my_model=Model()

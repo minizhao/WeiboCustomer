@@ -93,11 +93,8 @@ class Model(object):
         self.train_vec =  self.corpus_vec.transform(train_data)
         self.test_vec =  self.corpus_vec.transform(test_data)
 
-
         del train_data
         del test_data
-
-
 
     def train(self):
         
@@ -108,19 +105,13 @@ class Model(object):
 
         print('train model done')
 
-
     def eval(self):
         
-        
-
         preds = self.clf.predict(self.test_vec.toarray())
-
         print('准确度:{0:.3f}'.format(metrics.accuracy_score(self.test_label, preds)))
         print('精度:{0:.3f}'.format(metrics.precision_score(self.test_label, preds, average='weighted')))
         print('召回:{0:0.3f}'.format(metrics.recall_score(self.test_label, preds, average='weighted')))
         print('f1-score:{0:.3f}'.format(metrics.f1_score(self.test_label, preds, average='weighted')))
-
-
 
     def predict(self,intro):
         if type(intro)==str:
@@ -134,7 +125,7 @@ class Model(object):
 
 if __name__ == '__main__':
 
-    my_model=model()
+    my_model=Model()
     my_model.train()
     my_model.eval()
 
