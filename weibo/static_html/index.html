@@ -1,0 +1,82 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>
+            weibo
+        </title>
+        
+        
+        <link rel = "stylesheet" type = "text/css" href = "{% static 'demo.css' %}" />
+    </head>
+    <body>
+        <div class="pane-container">
+            <div class="pane model">
+                <div class="pane__left model__input">
+                    <div class="model__content">
+                        <h2><span>微博客户画像预测</span></h2>
+                        <div class="model__content">
+
+                            <div class="form__field">
+                                <label for="input-title">introduction:</label>
+                                <input type="text" id="input-introduction" type="text" value="登上北京卫视2010网络春晚舞台，出版葫芦丝音乐CD，荣获巴乌全国金奖，新浪社区委员会成员">
+                            </div>
+
+                            <div class="form__field">
+                                <label for="input-verifiedText">verifiedText</label>
+                                <input type="text" id="input-verifiedText" type="text" value="东方歌舞舞蹈演员 徐娜 网络红人，最美女研究生">
+                            </div>
+                            
+                             <div class="form__field">
+                                <label for="input-weiboContent">weiboContent</label>
+                                <textarea  id="input-weiboContent" type="text" > "太没道德了，现在的社会真的已经无药可救了么？起因都是一个贫富差距、如果大家生活都可以进入小康，那也不会有人稀罕这些钱了。旋转陀螺陪伴童年，所有的回忆只有珍藏。  我正在使用"陀螺"封面图，好漂亮，你们都快来试试！http://t.cn/8F7Owmy我知道此时此刻你们在想些什么东西，我的生活与你何干！每个人有每个人成功的途径，每个人有每个人独一无二的幸福，每个人有每个人心里的best love.你何苦操那么多跟你无关的心！我的幸福很简单，看着我的薰衣草茁壮成长，一家人可以团聚就是我最大的幸福。我刚刚发了一条#啪啪#，点开听听[音乐] http://t.cn/8FqNFaB ▶ (来自@啪啪)
+                                "
+                                </textarea>
+                            </div>
+
+                            <div class="form__field form__field--btn">
+                                <button type="button" class="btn btn--icon-disclosure" onclick="predict()">Predict</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pane__right model__output model__output--empty">
+                    <div class="pane__thumb"></div>
+                    <div class="model__content">
+                        <div id="output" class="output">
+                            <div class="placeholder">
+                                <div class="placeholder__content">
+                                    <p>Run model to view results</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.js"></script>
+    <script>
+    function predict() {
+        var quotedFieldList = ['introduction','verifiedText','weiboContent'];
+        var data = '';
+        quotedFieldList.forEach(function(fieldName) {
+            data+= fieldName+'='+document.getElementById("input-" + fieldName).value+'&';
+        })
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/predict');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+            if (xhr.status == 200) {
+                // If you want a more impressive visualization than just
+                // outputting the raw JSON, change this part of the code.
+                var htmlResults = "<pre>" + JSON.stringify(JSON.parse(xhr.responseText), null, 2) + "</pre>";
+
+                document.getElementById("output").innerHTML = htmlResults;
+            }
+        };
+       
+        xhr.send(data);
+    }
+    </script>
+</html>
