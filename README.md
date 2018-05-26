@@ -1,7 +1,7 @@
 # WeiboCustomer
   微博客户画像预测，
-code_offline: 线下测试代码
-weibo:Django 工程目录
+  code_offline: 线下测试代码
+  weibo:Django 工程目录
 
 环境需求：
 python3.6
